@@ -10,7 +10,7 @@ var cal = {
 
   //functions
   operations: {
-    addNum: function(){console.log(Number(this.innerHTML))},
+    addNum: function(){cal.display.innerHTML += this.innerHTML},
     addOp: function(){console.log(this.innerHTML)},
     sum: function(a,b) {return a+b},
     diff: function(a,b) {return a-b},

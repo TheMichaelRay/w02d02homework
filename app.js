@@ -12,13 +12,21 @@ var cal = {
   //functions
   operations: {
     clear: function(){cal.display.value = "";
-                      cal.display.placeholder = ""},
+                      cal.display.placeholder = "";
+                      cal.hold.arr = []},
     addNum: function(){cal.display.value += this.innerHTML},
-    addOp: function(){cal.hold.arr.push(cal.display.value);
+    addOp: function(){if (cal.hold.arr.length == 2){
+                          cal.hold.arr.push(cal.display.value);
+                          cal.display.value = eval(cal.hold.arr.join(''));
+                          cal.hold.arr = []}
+                      cal.hold.arr.push(cal.display.value);
                       cal.display.placeholder = cal.display.value;
                       cal.hold.arr.push(this.innerHTML);
                       cal.display.value = ""},
-    equals: function(){cal.hold.arr.push()}
+    equals: function(){cal.hold.arr.push(cal.display.value);
+                       cal.display.placeholder = eval(cal.hold.arr.join(''));
+                       cal.display.value = '';
+                       cal.hold.arr = []},
     sum: function(a,b) {return a+b},
     diff: function(a,b) {return a-b},
     prod: function(a,b) {return a*b},
@@ -37,6 +45,6 @@ for (var i = 0; i < cal.buttons.numbers.length; i++) {
 for (var i = 0; i < cal.buttons.operators.length; i++) {
   cal.buttons.operators[i].addEventListener('click', cal.operations.addOp)
 };
-cal.buttons.equals.addEventListener('click', cal.operations.addOp);
+cal.buttons.equals.addEventListener('click', cal.operations.equals);
 
 cal.buttons.clear.addEventListener('click', cal.operations.clear);

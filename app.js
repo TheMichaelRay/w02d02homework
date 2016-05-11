@@ -4,19 +4,31 @@ var cal = {
   buttons: {
     numbers: document.querySelectorAll('.num'),
     operators: document.querySelectorAll('.oper'),
-    equals: document.querySelector('#equals')
+    equals: document.querySelector('#equals'),
+    clear: document.querySelector('#clear')
     },
   display: document.querySelector('#display'),
 
   //functions
   operations: {
-    addNum: function(){cal.display.innerHTML += this.innerHTML},
-    addOp: function(){console.log(this.innerHTML)},
+    clear: function(){cal.display.value = "";
+                      cal.display.placeholder = ""},
+    addNum: function(){cal.display.value += this.innerHTML},
+    addOp: function(){cal.hold.arr.push(cal.display.value);
+                      cal.display.placeholder = cal.display.value;
+                      cal.hold.arr.push(this.innerHTML);
+                      cal.display.value = ""},
+    equals: function(){cal.hold.arr.push()}
     sum: function(a,b) {return a+b},
     diff: function(a,b) {return a-b},
     prod: function(a,b) {return a*b},
     quot: function(a,b) {return a/b}
-    }
+    },
+
+  //holding zone variables
+  hold: {
+    arr: []
+  }
 }
 
 for (var i = 0; i < cal.buttons.numbers.length; i++) {
@@ -25,4 +37,6 @@ for (var i = 0; i < cal.buttons.numbers.length; i++) {
 for (var i = 0; i < cal.buttons.operators.length; i++) {
   cal.buttons.operators[i].addEventListener('click', cal.operations.addOp)
 };
-cal.buttons.equals.addEventListener('click', cal.operations.addOp)
+cal.buttons.equals.addEventListener('click', cal.operations.addOp);
+
+cal.buttons.clear.addEventListener('click', cal.operations.clear);

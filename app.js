@@ -24,9 +24,19 @@ var cal = {
                       cal.hold.arr.push(this.innerHTML);
                       cal.display.value = ""},
     equals: function(){cal.hold.arr.push(cal.display.value);
-                       cal.display.placeholder = eval(cal.hold.arr.join(''));
+                       cal.display.placeholder = cal.operations.calc(cal.hold.arr);
                        cal.display.value = '';
                        cal.hold.arr = []},
+    calc: function(num1, operator, num2) {
+          if (operator === '+') {
+            return cal.operations.sum(num1, num2);
+          } else if (operator === '-') {
+            return cal.operations.diff(num1, num2);
+          } else if (operator === '*') {
+            return cal.operations.prod(num1, num2);
+          } else if (operator === '/') {
+            return cal.operations.quot(num1, num2);
+          } else {alert('ugh')}},
     sum: function(a,b) {return a+b},
     diff: function(a,b) {return a-b},
     prod: function(a,b) {return a*b},
